@@ -28,14 +28,14 @@ public class SauceDemoTest {
         driver.quit();
     }
 
-    @Test(description = "Тест 2: страницы логина c PageObject")
+    @Test(description = "Тест 2: автотест страницы логина c PageObject")
     public void loginWithPageObject(){
         driver.navigate().to("https://www.saucedemo.com/");
         LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.login();
     }
 
-    @Test(description = "Тест 1: страницы логина")
+    @Test(description = "Тест 1: страница логина")
     public void testLogin() {
         driver.navigate().to("https://www.saucedemo.com/");
         WebElement userNameField = driver.findElement(By.xpath("//*[@id='user-name']"));
