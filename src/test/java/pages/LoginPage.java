@@ -16,7 +16,7 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id = 'login-button']")
     private WebElement submitButton;
 
-    public void login (){
+    public void login() {
         loginField.sendKeys("standard_user");
         passwordField.sendKeys("secret_sauce");
         submitButton.click();
