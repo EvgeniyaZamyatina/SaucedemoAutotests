@@ -1,12 +1,16 @@
 package pages;
 
+import io.qameta.allure.Step;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
     // логин - "standard_user",  пароль - "secret_sauce"
 
-    // Аннотация @FindBy указывает Selenium, как найти элемент на странице.
+    private WebDriver driver;
+
     @FindBy(xpath = "//*[@id='user-name']")
     private WebElement loginField;
 
@@ -16,9 +20,38 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id = 'login-button']")
     private WebElement submitButton;
 
-    public void login() {
-        loginField.sendKeys("standard_user");
-        passwordField.sendKeys("secret_sauce");
+    @FindBy(xpath = "//*[@data-test='error']")
+    private WebElement errorMessage;
+
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
+    @Step("Ввести логин")
+    public void enterLogin (String loginString){
+        loginField.sendKeys(loginString);
+    }
+
+    @Step("Ввести пароль")
+    public void enterPassword (String passwordString){
+        passwordField.sendKeys(passwordString);
+    }
+
+    @Step("Нажать Login")
+    public ProductsPage clickLoginButton(){
         submitButton.click();
+        return new ProductsPage(driver);
+    }
+
+    @Step("Получен текст ошибки")
+    public String getErrorMessage() {
+        return errorMessage.getText();
+    }
+
+    public ProductsPage login(String loginString, String passwordString){
+        enterLogin(loginString);
+        enterPassword(passwordString);
+        return clickLoginButton();
     }
 }
