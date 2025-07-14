@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProductsPage;
+import static com.codeborne.selenide.Selenide.page;
 
 public class ProductsTest extends BaseTest{
     String successfullyLogin = "standard_user";
@@ -12,7 +13,7 @@ public class ProductsTest extends BaseTest{
 
     @Test(description = "ProductsPage. Тест 1: Добавление товара в корзину.")
     public void addProductsToCart() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = page(LoginPage.class);
         ProductsPage productsPage = loginPage.login(successfullyLogin, successfullyPassword);
         Assertions.assertThat(productsPage.getTitleProducts())
                 .as("Нет такого элемента")
@@ -24,6 +25,4 @@ public class ProductsTest extends BaseTest{
                 .as("Количество товаров изменилось")
                 .isVisible();
     }
-
-
 }

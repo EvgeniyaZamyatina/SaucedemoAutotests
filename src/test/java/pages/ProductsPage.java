@@ -1,35 +1,29 @@
 package pages;
 
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class ProductsPage {
-    private WebDriver driver;
-
     @FindBy(xpath = "//*[@data-test = 'title']")
-    private WebElement titleProducts;
+    private SelenideElement titleProducts;
 
     @FindBy(xpath = "//*[@data-test = 'add-to-cart-sauce-labs-backpack']")
-    private WebElement addToCartBackpack;
+    private SelenideElement addToCartBackpack;
 
     @FindBy(xpath = "//*[@data-test = 'add-to-cart-sauce-labs-bolt-t-shirt']")
-    private WebElement addToCartTShirt;
+    private SelenideElement addToCartTShirt;
 
     @FindBy(xpath = "//*[@data-test = 'add-to-cart-sauce-labs-fleece-jacket']")
-    private WebElement addToCartJacket;
+    private SelenideElement addToCartJacket;
 
     @FindBy(xpath = "//*[@data-test = 'shopping-cart-link']")
-    private WebElement cartLink;
+    private SelenideElement cartLink;
 
     @FindBy(xpath = "//*[@data-test = 'shopping-cart-badge']")
-    private WebElement cartBadge;
+    private SelenideElement cartBadge;
 
-    public ProductsPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public ProductsPage() {
     }
 
     @Step("Найти заголовок")
