@@ -44,9 +44,9 @@ public class LoginPage {
         return new ProductsPage(driver);
     }
 
-    @Step("Получен текст ошибки")
-    public String getErrorMessage() {
-        return errorMessage.getText();
+    @Step("Получить сообщение об ошибке")
+    public boolean getError() {
+        return errorMessage.isDisplayed();
     }
 
     public ProductsPage login(String loginString, String passwordString){
