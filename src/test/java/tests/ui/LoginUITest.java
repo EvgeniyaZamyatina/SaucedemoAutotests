@@ -1,16 +1,14 @@
-package tests;
+package tests.ui;
 
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import pages.ProductsPage;
+import pages.ui.LoginPage;
+import pages.ui.ProductsPage;
+import utils.ScreenshotVerifier;
 import static com.codeborne.selenide.Selenide.page;
 
-public class LoginTest extends BaseTest {
+public class LoginUITest extends BaseUITest {
     // логин - "standard_user",  пароль - "secret_sauce"
-    // Given (дано)
-    // When (когда)
-    // Then (тогда)
 
     String successfullyLogin = "standard_user";
     String successfullyPassword = "secret_sauce";
@@ -25,15 +23,17 @@ public class LoginTest extends BaseTest {
         Assertions.assertThat(productsPage.getTitleProducts())
                 .as("Нет такого элемента")
                 .isEqualTo(successfullyResultText);
+        makeScreenshot();
     }
 
     @Test(description = "LoginPage. Тест 2: Успешная авторизация. Рефакт")
-    public void newLogin() {
+    public void newLogin() throws Exception {
         LoginPage loginPage = page(LoginPage.class);
         ProductsPage productsPage = loginPage.login(successfullyLogin, successfullyPassword);
         Assertions.assertThat(productsPage.getTitleProducts())
                 .as("Нет такого элемента")
                 .isEqualTo(successfullyResultText);
+        ScreenshotVerifier.verifyScreenshot("LoginPage.Screenshots");
     }
 
     @Test(description = "LoginPage. Тест 3: Не успешная авторизация. Неверный логин")
@@ -54,5 +54,15 @@ public class LoginTest extends BaseTest {
         Assertions.assertThat(loginPage.getError())
                 .as("Сообщение об ошибке")
                 .isTrue();
+    }
+
+    @Test(description = "LoginPage. Тест 5: Не успешная авторизация + Скриншотный тест различий")
+    public void loginTestAndScreenshotVerifier() throws Exception {
+        LoginPage loginPage = page(LoginPage.class);
+        loginPage.login(successfullyLogin, "");
+        Assertions.assertThat(loginPage.getError())
+                .as("Сообщение об ошибке")
+                .isTrue();
+        ScreenshotVerifier.verifyScreenshot("LoginPage.Screenshots");
     }
 }

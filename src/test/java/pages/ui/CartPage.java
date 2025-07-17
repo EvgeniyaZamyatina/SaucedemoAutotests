@@ -1,4 +1,4 @@
-package pages;
+package pages.ui;
 
 public class CartPage {
 }
