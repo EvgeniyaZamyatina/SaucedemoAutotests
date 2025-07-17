@@ -1,31 +1,27 @@
-package pages;
+package pages.ui;
 
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+
+import static com.codeborne.selenide.Selenide.page;
 
 public class LoginPage {
     // логин - "standard_user",  пароль - "secret_sauce"
 
-    private WebDriver driver;
-
-    @FindBy(xpath = "//*[@id='user-name']")
-    private WebElement loginField;
+    @FindBy(id="user-name")
+    private SelenideElement loginField;
 
     @FindBy(xpath = "//*[@id=\"password\"]")
-    private WebElement passwordField;
+    private SelenideElement passwordField;
 
     @FindBy(xpath = "//*[@id = 'login-button']")
-    private WebElement submitButton;
+    private SelenideElement submitButton;
 
     @FindBy(xpath = "//*[@data-test='error']")
-    private WebElement errorMessage;
+    private SelenideElement errorMessage;
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public LoginPage() {
     }
 
     @Step("Ввести логин")
@@ -41,12 +37,12 @@ public class LoginPage {
     @Step("Нажать Login")
     public ProductsPage clickLoginButton(){
         submitButton.click();
-        return new ProductsPage(driver);
+        return page(ProductsPage.class);
     }
 
-    @Step("Получен текст ошибки")
-    public String getErrorMessage() {
-        return errorMessage.getText();
+    @Step("Получить сообщение об ошибке")
+    public boolean getError() {
+        return errorMessage.isDisplayed();
     }
 
     public ProductsPage login(String loginString, String passwordString){
